@@ -17,3 +17,17 @@ body {
 .page_subtitle {
     color: ghostwhite;
 }
+
+.custom-hr {
+  background-color: rgb(34, 204, 207);
+}
+
+.custom-btn {
+  background-color: rgb(34, 204, 207);
+  margin-top: 10px;
+  
+}
+
+button:hover {
+  background-color: cadetblue;
+}

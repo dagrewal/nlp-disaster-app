@@ -21,17 +21,38 @@
         
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-            <li class="nav-item">
-                <a class="nav-link" href="https://github.com/dagrewal/uk-crime-dashboard">GitHub Repository</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('index')}}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('about')}}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/dagrewal/uk-crime-dashboard">GitHub Repository</a>
+                </li>
             </ul>
         </div>
         </nav>
         <div class="row">
             <div class="col-12">
                 <div class="jumbotron custom-jumbotron bg-dark">
-                    <h1 class="text-center page_title">NLP Disaster Relief Modelling</h1>
-                    <p class="lead text-center page_subtitle">Classifying messages for Disaster Relief</h2>
+                    <div class="container">
+                        {% block head %}
+                        <h1 class="text-center page_title">NLP Disaster Relief Modelling</h1>
+                        <p class="lead text-center page_subtitle">Classifying messages for Disaster Relief</h2>
+                        <hr class="custom-hr" />
+                        <div class="row">
+                            <div class="col-12 form-group">
+                                <form action="/results" method="get">
+                                    <input type="text" class="form-control form-control" name="query" placeholder="Enter a message for classification">
+                                    <div class="row d-flex justify-content-center">
+                                        <button type="submit" class="btn custom-btn text-white">Classify Message</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
