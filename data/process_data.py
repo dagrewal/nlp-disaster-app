@@ -1,0 +1,96 @@
+import pandas as pd
+import numpy as np
+import sys
+from sqlalchemy import create_engine
+import os
+
+def load_data(feature_file, target_file):
+    """
+    Load dataset(s) into memory
+    Args:
+        feature_file: (str) location of the file to be read -> file must be .csv format
+                   header on the first line and data on the second line until the end of file.
+        target_file: (str) location of the file to be read -> file must be .csv format
+                   header on the first line and data on the second line until the end of file.
+       
+    Returns:
+        X: (np.array) containing the features from the data
+        y: (np.array) containing the target labels from the data
+    """
+
+    # read in files
+    try:
+        X = pd.read_csv(feature_file)
+        y = pd.read_csv(target_file)
+    except:
+        raise Exception("Unable to read in data file.")
+    finally:
+        return X, y
+
+def merge_data(X, y):
+    """
+    Merges X and y together
+    Args:
+        None
+
+    Returns:
+        df: (pandas.DataFrame) containing the merged data.
+    """
+
+    # merge data
+    try:
+        if X.shape[0] == y.shape[0]:
+            df = X.merge(y, left_on='id', right_on='id')
+    except:
+        raise Exception("Could not merge datasets.")
+    finally:
+        return df
+
+def clean_data(df):
+    """
+    Clean the dataset
+    Args:
+        None
+
+    Returns:
+        clean_df: (pandas.DataFrame) containing the cleaned dataset
+    """
+
+    try:
+        # clean target labels
+        categories = df.categories.str.split(";", expand=True)
+        cat_names = categories.applymap(lambda x: x[:-2]).values
+        categories = categories.applymap(lambda x: x[-1])
+        categories.columns = cat_names.tolist()[0]
+
+        # drop original categories column
+        df.drop(['categories'], axis=1, inplace=True)
+
+        # convert categories columns to int
+        for col in categories.columns:
+            categories[col] = categories[col].astype(int)
+
+        # merge categories with df
+        df = df.merge(categories, left_index=True, right_index=True)
+
+        # drop duplicates
+        df = df.drop_duplicates().reset_index(drop=True)
+
+        # remove original columns as it is not needed for modelling
+        df.drop(['original'], axis=1, inplace=True)
+    except:
+        raise Exception("Could not clean dataset.")
+    finally:
+        return df
+
+def store_data(df):
+    """
+    Store cleaned dataset into database
+    """
+    try:
+        engine = create_engine('sqlite:///disasters.db')
+        df.to_sql("disaster_data", engine, index=False)
+    except:
+        raise Exception("Could not store data.")
+
+
