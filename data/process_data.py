@@ -2,20 +2,19 @@ import pandas as pd
 import numpy as np
 import sys
 from sqlalchemy import create_engine
-import os
 
 def load_data(feature_file, target_file):
     """
     Load dataset(s) into memory
+
     Args:
         feature_file: (str) location of the file to be read -> file must be .csv format
                    header on the first line and data on the second line until the end of file.
         target_file: (str) location of the file to be read -> file must be .csv format
-                   header on the first line and data on the second line until the end of file.
-       
+                   header on the first line and data on the second line until the end of file. 
     Returns:
-        X: (np.array) containing the features from the data
-        y: (np.array) containing the target labels from the data
+        X: (pandas.DataFrame) containing the features from the data
+        y: (pandas.DataFrame) containing the target labels from the data
     """
 
     # read in files
@@ -30,9 +29,10 @@ def load_data(feature_file, target_file):
 def merge_data(X, y):
     """
     Merges X and y together
-    Args:
-        None
 
+    Args:
+        X: (pandas.DataFrame) containing message data
+        y: (pandas.DataFrame) containing target label data
     Returns:
         df: (pandas.DataFrame) containing the merged data.
     """
@@ -49,11 +49,11 @@ def merge_data(X, y):
 def clean_data(df):
     """
     Clean the dataset
-    Args:
-        None
 
+    Args:
+        df: (pandas.DatFrame) containing data to be cleaned
     Returns:
-        clean_df: (pandas.DataFrame) containing the cleaned dataset
+        df: (pandas.DataFrame) containing the cleaned dataset
     """
 
     try:
@@ -83,14 +83,47 @@ def clean_data(df):
     finally:
         return df
 
-def store_data(df):
+def store_data(df, database):
     """
     Store cleaned dataset into database
     """
     try:
-        engine = create_engine('sqlite:///disasters.db')
-        df.to_sql("disaster_data", engine, index=False)
+        engine = create_engine(f'sqlite:///{database}')
+        df.to_sql("disaster_data", engine, index=False, if_exists='replace')
     except:
         raise Exception("Could not store data.")
 
+def main():
+    """
+    Run process_data.py pipeline
+    """
+    if len(sys.argv) == 4:
+
+        messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
+
+        print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
+              .format(messages_filepath, categories_filepath))
+        X, y = load_data(messages_filepath, categories_filepath)
+
+        print("Merging message and category data together...")
+        df = merge_data(X,y)
+
+        print('Cleaning data...')
+        df = clean_data(df)
+        
+        print('Storing data...\n    DATABASE: {}'.format(database_filepath))
+        store_data(df, database_filepath)
+        
+        print('Cleaned data saved to database!')
+    
+    else:
+        print('Please provide the filepaths of the messages and categories '\
+              'datasets as the first and second argument respectively, as '\
+              'well as the filepath of the database to save the cleaned data '\
+              'to as the third argument. \n\nExample: python process_data.py '\
+              'disaster_messages.csv disaster_categories.csv '\
+              'DisasterResponse.db')
+
+if __name__ == '__main__':
+    main()
 
