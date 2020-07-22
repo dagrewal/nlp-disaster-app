@@ -86,6 +86,12 @@ def clean_data(df):
 def store_data(df, database):
     """
     Store cleaned dataset into database
+
+    Args:
+        df: (pandas.DataFrame) containing dataset to be stored
+        database: (str) representing name of database to store dataset into
+    Returns:
+        None
     """
     try:
         engine = create_engine(f'sqlite:///{database}')
@@ -96,6 +102,12 @@ def store_data(df, database):
 def main():
     """
     Run process_data.py pipeline
+    This function is adapted from https://classroom.udacity.com/nanodegrees/nd025/parts/3f1cdf90-8133-4822-ba56-934933b6b4bb/modules/b46b8867-d211-4be9-88f9-2365a35874be/lessons/7a929d2c-6da9-49d4-9849-e725b8c6e7a2/concepts/94f3a9bf-52af-4c12-82e2-b6065716fa1f
+
+    Args:
+        None
+    Returns:
+        None
     """
     if len(sys.argv) == 4:
 
