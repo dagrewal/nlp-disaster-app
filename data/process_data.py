@@ -62,6 +62,11 @@ def clean_data(df):
         cat_names = categories.applymap(lambda x: x[:-2]).values
         categories = categories.applymap(lambda x: x[-1])
         categories.columns = cat_names.tolist()[0]
+        single_cardinality_classes = categories.columns[categories.nunique() == 1]
+        categories.drop(single_cardinality_classes, axis=1, inplace=True)
+
+        # there are some errors in the data where related = 2, change this to one
+        categories = categories.replace(2, 1)
 
         # drop original categories column
         df.drop(['categories'], axis=1, inplace=True)
