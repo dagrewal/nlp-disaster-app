@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+
+{% block head %}
+<h1 class="text-center page_title">Results</h1>
+<hr class="custom-hr" />
+{% endblock %}
+
+<h1 class="text-center">Result</h1>
+    <ul class="list-group">
+        {% for category, classification in model_results.items() %}
+            {% if classification == 1 %}
+                <li class="list-group-item list-group-item-success text-center">{{category}}</li>
+            {% else %}
+                <li class="list-group-item list-group-item-dark text-center">{{category}}</li>
+            {% endif %}
+        {% endfor %}
