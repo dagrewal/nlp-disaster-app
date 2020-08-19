@@ -63,6 +63,10 @@ def index():
 
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+
+    top_targets = targets.sum().sort_values(ascending=False)[:10]
+    target_names = top_targets.index
+    target_counts = top_targets.values
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -71,22 +75,60 @@ def index():
             'data': [
                 Bar(
                     x=genre_names,
-                    y=genre_counts
+                    y=genre_counts,
+                    marker_color='turquoise',
+                    marker_line_color='white'
                 )
             ],
 
             'layout': {
                 'title': 'Distribution of Message Genres',
+                'font': {
+                    'color':'white'
+                },
+                'plot_bgcolor':'transparent',
+                'paper_bgcolor':'transparent',
                 'yaxis': {
-                    'title': "Count"
+                    'title': "Count",
+                    'color':'white'
                 },
                 'xaxis': {
-                    'title': "Genre"
+                    'title': "Genre",
+                    'color':'white',
+                    'showgrid':False
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=target_names,
+                    y=target_counts,
+                    marker_color='turquoise',
+                    marker_line_color='white'
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Most Common Target Labels',
+                'font': {
+                    'color': 'white'
+                },
+                'plot_bgcolor':'transparent',
+                'paper_bgcolor':'transparent',
+                'yaxis': {
+                    'title': "Count",
+                    'color':'white'
+                },
+                'xaxis': {
+                    'title': "Genre",
+                    'color':'white',
+                    'showgrid':False
                 }
             }
         }
     ]
-    
+
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
@@ -101,14 +143,16 @@ def about():
 @app.route('/results')
 def results():
 
-    # get the message that the user entered to be predicted
+    # get the message that the user entered to be predicted and store as df (required for columntransformer)
     query = request.args.get('query', '')
+    query_df = pd.DataFrame({'message':query}, index=[0])
 
     # predict the classes for the message inside the query
-    query_pred = model.predict(np.array(query).reshape(1,-1))
+    query_pred = model.predict(query_df)[0]
     model_results = dict(zip(labels, query_pred))
 
-    return render_template('results.html', query=query, model_results=model_results)
+    return render_template('results.html', query=query, model_results=model_results,
+                           enumerate=enumerate)
 
 def main():
     app.run(debug=True)

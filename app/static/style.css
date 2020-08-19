@@ -7,7 +7,7 @@ body {
     border:1px solid rgb(34, 204, 207);
     width: 50%;
     margin: 0 auto;
-  }
+}
 
   .page_title {
     color: rgb(34, 204, 207);
@@ -29,5 +29,29 @@ body {
 }
 
 button:hover {
+  background-color: cadetblue;
+}
+
+
+.results-list {
+  width: 50%;
+  padding: 0;
+  margin: auto;
+}
+
+.custom-card-title {
+  margin-top: 3px;
+}
+.card-success {
+  background-color: rgb(34, 204, 207);
+  border-color: white;
+}
+
+.card-nosuccess {
+  background-color: transparent;
+  border-color: white;
+}
+
+.card:hover {
   background-color: cadetblue;
 }
