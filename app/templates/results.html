@@ -3,14 +3,59 @@
 {% block head %}
 <h1 class="text-center page_title">Results</h1>
 <hr class="custom-hr" />
+<p class="lead text-white">The message <span style="color: rgb(34, 204, 207)">{{query}}</span> has been classified.
+The categories that the message has been classified into have been <span style="color: rgb(34, 204, 207)">highlighted</span> below.
+</p>
 {% endblock %}
 
-<h1 class="text-center">Result</h1>
-    <ul class="list-group">
-        {% for category, classification in model_results.items() %}
-            {% if classification == 1 %}
-                <li class="list-group-item list-group-item-success text-center">{{category}}</li>
-            {% else %}
-                <li class="list-group-item list-group-item-dark text-center">{{category}}</li>
-            {% endif %}
-        {% endfor %}
+{% block content %}
+<div class="container mt-6">
+    <div class="row mt-3">
+    {% for cat, class in model_results.items() %}
+        <!--<div class="row mt-3">-->
+        {% if class == 1 %}
+        <div class="col-sm-3 mb-3">
+            <div class="card card-success">
+                <h6 class="text-white text-center custom-card-title">{{cat}}</h6>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-sm-3 mb-3">
+            <div class="card card-nosuccess">
+                <h6 class="text-white text-center custom-card-title">{{cat}}</h6>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+    <!--<div class="row">
+    {% for category, classification in model_results.items() %}
+        
+        {% if classification == 1 %}
+        <div class="col-2">
+            <div class="card results-list-success">
+                <p class="card-text text-white">{{category}}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-2">
+            <div class="card results-list-nosuccess">
+                <p class="card-text text-white">{{cateogry}}</p>
+            </div>
+        </div>
+        {% endif %}
+       
+    {% endfor %}
+</div>
+        <ul class="list-group results-list">
+            {% for category, classification in model_results.items() %}
+                {% if classification == 1 %}
+                    <li class="list-group-item text-center text-white results-list-success">{{category}}</li>
+                {% else %}
+                    <li class="list-group-item text-center text-white results-list-nosuccess">{{category}}</li>
+                {% endif %}
+            {% endfor %}
+        </ul> -->
+    
+</div>
+{% endblock %}

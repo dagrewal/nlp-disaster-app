@@ -54,10 +54,16 @@
                         {% endblock %}
                     </div>
                 </div>
-                {% for id in ids %}
-                <div id="{{id}}"></div>
-                {% endfor %}
             </div>
+        </div>
+        <div class="row">
+            {% block content %}
+                {% for id in ids %}
+                <div class="col-6">
+                    <div id="{{id}}"></div>
+                </div>
+                {% endfor %}
+            {% endblock %}
         </div>
         <script type="text/javascript">
             const graphs = {{graphJSON | safe}};
