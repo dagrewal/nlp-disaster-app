@@ -1,4 +1,3 @@
-appnope @ file:///opt/concourse/worker/volumes/live/0291c9e1-4b15-459f-623e-2770f55be269/volume/appnope_1594338395037/work
 attrs==19.3.0
 backcall==0.2.0
 blis==0.4.1
@@ -9,40 +8,31 @@ cffi==1.14.0
 chardet==3.0.4
 click==7.1.2
 cryptography==2.9.2
-cymem @ file:///Users/runner/miniforge3/conda-bld/cymem_1591801109211/work
 decorator==4.4.2
-en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.3.1/en_core_web_sm-2.3.1.tar.gz
 Flask==1.1.2
 gunicorn==20.0.4
-idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1593328102638/work
-importlib-metadata @ file:///Users/runner/miniforge3/conda-bld/importlib-metadata_1593211382425/work
-ipykernel @ file:///opt/concourse/worker/volumes/live/cb5649db-6f30-435c-6981-1014aa39f028/volume/ipykernel_1594755378873/work/dist/ipykernel-5.3.2-py3-none-any.whl
-ipython @ file:///opt/concourse/worker/volumes/live/41e43e2f-bbbe-4c76-44fb-a6de0e826dd8/volume/ipython_1593447396701/work
 ipython-genutils==0.2.0
 itsdangerous==1.1.0
-jedi @ file:///opt/concourse/worker/volumes/live/1c5c293b-9147-4b4b-5a7f-d3f5eddb8470/volume/jedi_1592841952519/work
 Jinja2==2.11.2
-joblib @ file:///tmp/build/80754af9/joblib_1594236160679/work
+joblib
 jsonschema==3.2.0
-jupyter-client @ file:///tmp/build/80754af9/jupyter_client_1594826976318/work
-jupyter-core==4.6.3
 MarkupSafe==1.1.1
 mkl-fft==1.1.0
 mkl-random==1.1.1
 mkl-service==2.3.0
 murmurhash==1.0.0
-nltk @ file:///tmp/build/80754af9/nltk_1592496090529/work
+nltk
 numpy==1.18.5
-pandas @ file:///opt/concourse/worker/volumes/live/5ef6147e-ea92-446e-4065-0c8c7435293f/volume/pandas_1592841676717/work
+pandas
 parso==0.7.0
-pexpect @ file:///opt/concourse/worker/volumes/live/8701bb20-ad87-46c7-5108-30c178cf97e5/volume/pexpect_1594383388344/work
-pickleshare @ file:///opt/concourse/worker/volumes/live/93ec39d8-05bb-4f84-7efc-98735bc39b70/volume/pickleshare_1594384101884/work
-plac @ file:///opt/concourse/worker/volumes/live/b396e4ca-d114-4800-41a2-71d753ee926d/volume/plac_1594261971168/work
-plotly @ file:///tmp/build/80754af9/plotly_1593522991827/work
-preshed @ file:///Users/runner/miniforge3/conda-bld/preshed_1591802157106/work
+pexpect
+pickleshare
+plac
+plotly
+preshed
 prompt-toolkit==3.0.5
 ptyprocess==0.6.0
-pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1593275161868/work
+pycparser
 Pygments==2.6.1
 pyOpenSSL==19.1.0
 pyrsistent==0.16.0
@@ -50,23 +40,21 @@ PySocks==1.7.1
 python-dateutil==2.8.1
 pytz==2020.1
 pyzmq==19.0.1
-regex @ file:///opt/concourse/worker/volumes/live/93a9c6ee-7d77-4975-4d26-29732dd5574b/volume/regex_1593435592218/work
-requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1592425495151/work
+regex
+requests
 retrying==1.3.3
-scikit-learn @ file:///opt/concourse/worker/volumes/live/47a3ec7c-70dc-43c0-7317-def24a8afaf5/volume/scikit-learn_1592503037057/work
-scipy @ file:///opt/concourse/worker/volumes/live/7f5e51f8-abf3-4409-4c56-a4fb14cc9869/volume/scipy_1593104185999/work
+scikit-learn
+scipy
 six==1.15.0
-spacy @ file:///Users/runner/miniforge3/conda-bld/spacy_1594144093695/work
-spacy-lookups-data @ file:///home/conda/feedstock_root/build_artifacts/spacy-lookups-data_1589900486970/work
-SQLAlchemy @ file:///opt/concourse/worker/volumes/live/45657106-f60d-42e1-6501-7d65be3b36ab/volume/sqlalchemy_1593446313078/work
-srsly @ file:///Users/runner/miniforge3/conda-bld/srsly_1589222430265/work
-thinc @ file:///Users/runner/miniforge3/conda-bld/thinc_1590400430954/work
-threadpoolctl @ file:///tmp/tmp9twdgx9k/threadpoolctl-2.1.0-py3-none-any.whl
+SQLAlchemy
+srsly
+thinc
+threadpoolctl
 tornado==6.0.4
-tqdm @ file:///home/conda/feedstock_root/build_artifacts/tqdm_1593390011681/work
+tqdm
 traitlets==4.3.3
 urllib3==1.25.9
-wasabi @ file:///home/conda/feedstock_root/build_artifacts/wasabi_1592819210112/work
-wcwidth @ file:///tmp/build/80754af9/wcwidth_1593447189090/work
+wasabi
+wcwidth
 Werkzeug==1.0.1
 zipp==3.1.0
