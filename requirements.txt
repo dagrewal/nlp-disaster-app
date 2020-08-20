@@ -5,4 +5,5 @@ requests
 plotly
 scikit-learn
 nltk
+sqlalchemy
 joblib
