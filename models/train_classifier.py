@@ -17,8 +17,9 @@ from sklearn.metrics import coverage_error, classification_report
 import re
 import pickle
 
-from .utils import tokenize
+from utils import tokenize
 from StartingVerbExtractor import StartingVerbExtractor
+from CategoryTermExtractor import CategoryTermExtractor
 
 # initialise stopword, tokenizer and lemmatizer to be used for feature engineering of messages
 
@@ -49,7 +50,7 @@ def load_data(database_path):
     finally:
         return X, y, category_names
 
-def build_model():
+def build_model(category_names):
     """
     Builds a multilabel classifier using X and y from load_data()
 
@@ -74,6 +75,9 @@ def build_model():
 
                 ('starting_verb', StartingVerbExtractor(), message_col),
 
+                ('category_terms', CategoryTermExtractor(category_names=category_names),
+                message_col),
+
             ], remainder='drop')),
             # specify the estimator
             ('clf', MultiOutputClassifier(ExtraTreesClassifier()))
@@ -81,25 +85,26 @@ def build_model():
 
         # parameter grid to be used for grid search
         parameters = {
-            'features__text_pipeline__vect__max_features': [10000],
+            'features__text_pipeline__vect__max_features': [5000,10000],
             'features__text_pipeline__tfidf__sublinear_tf': [True],
             #'features__text_pipeline__vect__ngram_range': [(1,1), (1,2)],
             'features__text_pipeline__vect__min_df': [1],
-            'features__text_pipeline__vect__max_df': [.95],
+            'features__text_pipeline__vect__max_df': [.95, 1],
             'features__text_pipeline__tfidf__smooth_idf': [True],
             'features__text_pipeline__tfidf__norm': ['l2'],
-            #'clf__estimator__n_estimators': [100, 300, 500],
+            'clf__estimator__n_estimators': [100, 150],
             'clf__estimator__max_features': ['auto'],
             'clf__estimator__min_samples_leaf': [10],
             'clf__estimator__max_depth': [.7, .9]
         }
 
         # perform cross validation using grid search on the pipeline described above
-        cv = GridSearchCV(pipeline, param_grid=parameters, cv=2, verbose=1)
+        cv = GridSearchCV(pipeline, param_grid=parameters, cv=5, verbose=1)
+        return cv
     except:
         raise Exception("Could not build model.")
-    finally:
-        return cv
+    #finally:
+    #    return cv
  
 def evaluate_model(model, X_test, y_test, category_names):
     """
@@ -152,7 +157,7 @@ def main():
             X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
             
             print('Building model...')
-            model = build_model()
+            model = build_model(category_names)
             
             print('Training model...')
             model.fit(X_train, Y_train)
