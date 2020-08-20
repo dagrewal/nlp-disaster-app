@@ -17,7 +17,7 @@ from sklearn.metrics import coverage_error, classification_report
 import re
 import pickle
 
-from utils import tokenize
+from .utils import tokenize
 from StartingVerbExtractor import StartingVerbExtractor
 
 # initialise stopword, tokenizer and lemmatizer to be used for feature engineering of messages

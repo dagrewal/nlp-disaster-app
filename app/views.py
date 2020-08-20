@@ -1,4 +1,6 @@
+from . import app
 import sys
+import os
 from flask import Flask, render_template, url_for, jsonify, request
 import json, plotly
 from plotly.graph_objs import Bar
@@ -10,10 +12,10 @@ from nltk import WordNetLemmatizer
 import pandas as pd
 import numpy as np
 
-app = Flask(__name__)
+#app = Flask(__name__)
 
 # load data from sql
-database_path = "../data/disasters.db"
+database_path = os.path.abspath(os.getcwd()) + "/data/disasters.db"
 engine = create_engine(f'sqlite:///{database_path}')
 df = pd.read_sql_table(table_name='disaster_data', con=engine)
 
@@ -53,8 +55,8 @@ def tokenize(text):
     finally:
         return clean_tokens
 
-model_path = "../models/etrees_260720.pkl"
-sys.path.append(r'../models/')
+model_path = os.path.abspath(os.getcwd()) + "/models/etrees_260720.pkl"
+sys.path.append(os.path.abspath(os.getcwd()) + '/models/')
 model = joblib.load(model_path)
 
 @app.route('/')
