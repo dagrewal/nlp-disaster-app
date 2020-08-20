@@ -12,6 +12,7 @@ def tokenize(text):
     Returns:
         clean_tokens: (list) containing the clean tokens of the input message (text)
     """
+    clean_tokens = []
     try:
 
         stops = set(stopwords.words('english'))
