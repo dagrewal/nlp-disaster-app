@@ -123,7 +123,7 @@ def index():
                     'color':'white'
                 },
                 'xaxis': {
-                    'title': "Genre",
+                    'title': "Label",
                     'color':'white',
                     'showgrid':False
                 }
