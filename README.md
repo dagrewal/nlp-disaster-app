@@ -60,7 +60,7 @@ The model actually has poor predictive performance. It could be a task for the r
 [Daniel Grewal](https://github.com/dagrewal)
 
 ## 5. License
-
+https://opensource.org/licenses/MIT
 ## 6. Acknowledgements
 This project was completed as part of the Udacity Data Science Nanodegree program.
 The data used for this project was provided by Figure8.
