@@ -20,7 +20,7 @@ def tokenize(text):
         tweet_tokenizer = TweetTokenizer()
 
         # keep only lowercase letters
-        text = re.sub("[^a-z]", " ", text.lower())
+        text = re.sub("[^a-z0-9]", " ", text.lower())
 
         # initialise empty list to hold tokens
         clean_tokens = []

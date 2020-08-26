@@ -43,7 +43,6 @@ def load_data(database_path):
         # seperate features and targets
         X = pd.DataFrame(df.loc[:,'message'])
         y = df.iloc[:,3:]
-        y = y.replace(2, 1)
         category_names = y.columns.tolist()
     except:
         raise Exception("Could not load data.")
@@ -123,7 +122,17 @@ def evaluate_model(model, X_test, y_test, category_names):
         y_test_avg_labels = round(np.mean(y_test.sum(axis=1)), 2)
     
         print("Printing classification report...\n")
-        print(classification_report(y_test, y_pred, target_names=category_names, zero_division=0))
+        y_pred = model.predict(X_test)
+
+        i = -1
+        for col in category_names:
+            i += 1
+            ytrue = y_test[col]
+            ypred = y_pred[:,i]
+            print(col)
+            print(classification_report(ytrue, ypred))        
+            print('-' * 60)
+
         print("\n Printing coverage error...\n")
         print(round(coverage_error(y_test, y_pred), 2))
         print(f"\n Average number of true labels per sample in test sample: {y_test_avg_labels}")
