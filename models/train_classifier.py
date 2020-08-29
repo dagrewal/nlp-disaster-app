@@ -93,10 +93,10 @@ def build_model(category_names):
             'features__text_pipeline__vect__max_df': [.95],
             'features__text_pipeline__tfidf__smooth_idf': [True],
             'features__text_pipeline__tfidf__norm': ['l2'],
-            'clf__estimator__n_estimators': [100, 150],
-            'clf__estimator__max_features': ['auto'],
-            'clf__estimator__min_samples_leaf': [10],
-            'clf__estimator__max_depth': [.7, .9]
+            'clf__classifier__n_estimators': [100, 150],
+            'clf__classifier__max_features': ['auto'],
+            'clf__classifier__min_samples_leaf': [10],
+            'clf__classifier__max_depth': [.7, .9]
         }
 
         # perform cross validation using grid search on the pipeline described above
@@ -166,9 +166,6 @@ def main():
             print('Loading data...\n    DATABASE: {}'.format(database_filepath))
             X, Y, category_names = load_data(database_filepath)
             X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-
-            # get max features
-            max_feats = X_train.message.str.split().join(' ').nunique()
             
             print('Building model...')
             model = build_model(category_names)
