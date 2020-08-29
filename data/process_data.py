@@ -72,6 +72,9 @@ def clean_data(df):
         for col in categories.columns:
             categories[col] = categories[col].astype(int)
 
+        # convert categories.related values (2) to (1)
+        categories.related = categories.related.replace(2, 1)
+
         # merge categories with df
         df = df.merge(categories, left_index=True, right_index=True)
 

@@ -14,14 +14,14 @@ from sklearn.multioutput import MultiOutputClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import coverage_error, classification_report
 
+from skmultilearn.problem_transform import LabelPowerset
+
 import re
 import pickle
 
 from utils import tokenize
 from StartingVerbExtractor import StartingVerbExtractor
 from CategoryTermExtractor import CategoryTermExtractor
-
-# initialise stopword, tokenizer and lemmatizer to be used for feature engineering of messages
 
 
 def load_data(database_path):
@@ -32,7 +32,8 @@ def load_data(database_path):
         database_path: (str) representing the path to the database where the data is stored
     Returns:
         X: (pandas.DataFrame) containing the features of the data
-        y: (pandas.DataFrame) containing the multilabel target data
+        yt: (pandas.DataFrame) containing the multilabel target data
+        y_resampled:
         category_names: (list) containing the name of the target labels
     """
 
@@ -78,17 +79,18 @@ def build_model(category_names):
                 message_col),
 
             ], remainder='drop')),
+
             # specify the estimator
-            ('clf', MultiOutputClassifier(ExtraTreesClassifier()))
+            ('clf', LabelPowerset(ExtraTreesClassifier(n_jobs=15)))
         ])
 
         # parameter grid to be used for grid search
         parameters = {
-            'features__text_pipeline__vect__max_features': [5000,10000],
+            'features__text_pipeline__vect__max_features': [10000],
             'features__text_pipeline__tfidf__sublinear_tf': [True],
-            #'features__text_pipeline__vect__ngram_range': [(1,1), (1,2)],
+            'features__text_pipeline__vect__ngram_range': [(1,1), (1,2)],
             'features__text_pipeline__vect__min_df': [1],
-            'features__text_pipeline__vect__max_df': [.95, 1],
+            'features__text_pipeline__vect__max_df': [.95],
             'features__text_pipeline__tfidf__smooth_idf': [True],
             'features__text_pipeline__tfidf__norm': ['l2'],
             'clf__estimator__n_estimators': [100, 150],
@@ -98,7 +100,7 @@ def build_model(category_names):
         }
 
         # perform cross validation using grid search on the pipeline described above
-        cv = GridSearchCV(pipeline, param_grid=parameters, cv=5, verbose=1)
+        cv = GridSearchCV(pipeline, param_grid=parameters, cv=5, verbose=2)
         return cv
     except:
         raise Exception("Could not build model.")
@@ -122,7 +124,7 @@ def evaluate_model(model, X_test, y_test, category_names):
         y_test_avg_labels = round(np.mean(y_test.sum(axis=1)), 2)
     
         print("Printing classification report...\n")
-        y_pred = model.predict(X_test)
+        y_pred = model.predict(X_test).todense()
 
         i = -1
         for col in category_names:
@@ -164,6 +166,9 @@ def main():
             print('Loading data...\n    DATABASE: {}'.format(database_filepath))
             X, Y, category_names = load_data(database_filepath)
             X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+
+            # get max features
+            max_feats = X_train.message.str.split().join(' ').nunique()
             
             print('Building model...')
             model = build_model(category_names)
