@@ -4,6 +4,7 @@ pandas
 requests
 plotly
 scikit-learn
+scikit-multilearn
 nltk
 sqlalchemy
 joblib
