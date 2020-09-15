@@ -47,11 +47,11 @@ The Python script will proceed to read in the two .csv files, clean the data as 
 Using the terminal (or command prompt):
 
 1. Navigate to `nlp-disaster-app/models`
-2. Run `python train_classifier.py ../data[insert_database_name].db [insert_saved_model_name].pkl`
+2. Run `python train_classifier.py ../data[insert_database_name].db [insert_saved_model_name]`
 
 The Python script will proceed to prepare the data for training, engineer new features and train a supervised learning model using the prepared training data. The script will save the model into a .pkl file in the same folder as the Python script. For specifics on the engineering of new features and the model development, please inspect the functions within the script.
 
-Once everything has finished running (**note** that the *train_classifier.py* script will take a while to run), run `gunicorn nlp-disaster-app:app` and navigate to **localhost:8000**.
+Once everything has finished running (**note** that the *train_classifier.py* script will take a while to run), navigate to `nlp-disaster-app` and run `gunicorn nlp-disaster-app:app` and navigate to **localhost:8000**.
 
 ## 3. Future Developments
 The model actually has poor predictive performance. It could be a task for the reader to improve the accuracy of the model by engineering new features and applying different supervised learning models. The reader could also create more visualizations to be included on the home page of the application.

@@ -55,7 +55,7 @@ def tokenize(text):
     finally:
         return clean_tokens
 
-model_path = os.path.abspath(os.getcwd()) + "/models/etrees_260720.pkl"
+model_path = os.path.abspath(os.getcwd()) + "/models/mnb_160920.pkl"
 sys.path.append(os.path.abspath(os.getcwd()) + '/models/')
 model = joblib.load(model_path)
 
@@ -151,10 +151,9 @@ def results():
 
     # predict the classes for the message inside the query
     query_pred = model.predict(query_df)[0]
-    model_results = dict(zip(labels, query_pred))
+    model_results = dict(zip(labels, query_pred.todense().tolist()[0]))
 
-    return render_template('results.html', query=query, model_results=model_results,
-                           enumerate=enumerate)
+    return render_template('results.html', query=query, model_results=model_results)
 
 def main():
     app.run(debug=True)

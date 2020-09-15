@@ -44,7 +44,7 @@
                         <div class="row">
                             <div class="col-12 form-group">
                                 <form action="/results" method="get">
-                                    <input type="text" class="form-control form-control" name="query" placeholder="Enter a message for classification">
+                                    <input type="text" class="form-control form-control" name="query" placeholder="Enter a message e.g. I just felt an earthquake tremor in London!">
                                     <div class="row d-flex justify-content-center">
                                         <button type="submit" class="btn custom-btn text-white">Classify Message</button>
                                     </div>
@@ -56,13 +56,24 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="container">
             {% block content %}
+                <div class="row mt-3">
+                    <div class="col-sm-12">
+                        <p class="text-white">
+                            This website uses open-source disaster data to classify messages into one (or several) disaster-related categories. The visualizations below show some high level information
+                            about the dataset, including the genre of messages that were used to train the machine learning model as well as the (prior) class distribution of the  most common disaster categories.
+                            To get started, simply enter your own disaster message into the box above and hit the "Classify Message" button to see the results.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
                 {% for id in ids %}
                 <div class="col-6">
                     <div id="{{id}}"></div>
                 </div>
                 {% endfor %}
+            </div>
             {% endblock %}
         </div>
         <script type="text/javascript">
