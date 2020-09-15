@@ -6,6 +6,15 @@
 <p class="lead text-white">The message <span style="color: rgb(34, 204, 207)">{{query}}</span> has been classified.
 The categories that the message has been classified into have been <span style="color: rgb(34, 204, 207)">highlighted</span> below.
 </p>
+<div class="row">
+    <div class="col-12 form-group">
+        <form action="/index" method="get">
+            <div class="row d-flex justify-content-center">
+                <button type="submit" class="btn custom-btn text-white">Classify New Message</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
 
 {% block content %}

@@ -9,8 +9,7 @@ from sqlalchemy import create_engine
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.ensemble import ExtraTreesClassifier
-from sklearn.multioutput import MultiOutputClassifier
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import coverage_error, classification_report
 
@@ -81,7 +80,7 @@ def build_model(category_names):
             ], remainder='drop')),
 
             # specify the estimator
-            ('clf', LabelPowerset(ExtraTreesClassifier(n_jobs=15)))
+            ('clf', LabelPowerset(MultinomialNB(fit_prior=True)))
         ])
 
         # parameter grid to be used for grid search
@@ -93,10 +92,7 @@ def build_model(category_names):
             'features__text_pipeline__vect__max_df': [.95],
             'features__text_pipeline__tfidf__smooth_idf': [True],
             'features__text_pipeline__tfidf__norm': ['l2'],
-            'clf__classifier__n_estimators': [100, 150],
-            'clf__classifier__max_features': ['auto'],
-            'clf__classifier__min_samples_leaf': [10],
-            'clf__classifier__max_depth': [.7, .9]
+            'clf__classifier__alpha': [0.01, 1.]
         }
 
         # perform cross validation using grid search on the pipeline described above
