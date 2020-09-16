@@ -16,7 +16,7 @@ from sklearn.metrics import coverage_error, classification_report
 from skmultilearn.problem_transform import LabelPowerset
 
 import re
-import pickle
+import joblib
 
 from utils import tokenize
 from StartingVerbExtractor import StartingVerbExtractor
@@ -87,12 +87,12 @@ def build_model(category_names):
         parameters = {
             'features__text_pipeline__vect__max_features': [10000],
             'features__text_pipeline__tfidf__sublinear_tf': [True],
-            'features__text_pipeline__vect__ngram_range': [(1,1), (1,2)],
+            'features__text_pipeline__vect__ngram_range': [(1,2)],
             'features__text_pipeline__vect__min_df': [1],
             'features__text_pipeline__vect__max_df': [.95],
             'features__text_pipeline__tfidf__smooth_idf': [True],
             'features__text_pipeline__tfidf__norm': ['l2'],
-            'clf__classifier__alpha': [0.01, 1.]
+            'clf__classifier__alpha': [1.]
         }
 
         # perform cross validation using grid search on the pipeline described above
@@ -149,9 +149,9 @@ def save_model(model, model_filepath):
     """
     try:
         filename = f'{model_filepath}.pkl'
-        pickle.dump(model,
+        joblib.dump(model,
                     open(filename, 'wb'),
-                    protocol=4)
+                    compress=3)
     except:
         raise Exception("Could not save model.")
 
