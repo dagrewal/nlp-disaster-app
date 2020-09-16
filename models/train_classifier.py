@@ -38,17 +38,17 @@ def load_data(database_path):
 
     try:
         engine = create_engine(f"sqlite:///{database_path}")
-        df = pd.read_sql_table(table_name="disaster_data", con=engine)
+        df = pd.read_sql_table(table_name="disaster_data".lower(), con=engine)
 
         # seperate features and targets
         X = pd.DataFrame(df.loc[:,'message'])
         y = df.iloc[:,3:]
         category_names = y.columns.tolist()
+
+        return X, y, category_names
     except:
         raise Exception("Could not load data.")
-    finally:
-        return X, y, category_names
-
+        
 def build_model(category_names):
     """
     Builds a multilabel classifier using X and y from load_data()

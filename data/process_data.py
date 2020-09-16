@@ -100,7 +100,7 @@ def store_data(df, database):
     """
     try:
         engine = create_engine(f'sqlite:///{database}')
-        df.to_sql("disaster_data", engine, index=False, if_exists='replace')
+        df.to_sql("disaster_data".lower()], engine, index=False, if_exists='replace')
     except:
         raise Exception("Could not store data.")
 
