@@ -5,7 +5,7 @@ from flask import Flask, render_template, url_for, jsonify, request
 import json, plotly
 from plotly.graph_objs import Bar
 from sqlalchemy import create_engine
-import pickle
+import joblib
 from nltk.tokenize import word_tokenize, TweetTokenizer
 from nltk.corpus import stopwords
 from nltk import WordNetLemmatizer
@@ -57,7 +57,7 @@ def tokenize(text):
 
 model_path = os.path.abspath(os.getcwd()) + "/models/mnb_160920.pkl"
 sys.path.append(os.path.abspath(os.getcwd()) + '/models/')
-model = pickle.loads(model_path)
+model = joblib.load(model_path)
 
 @app.route('/')
 @app.route('/index')
