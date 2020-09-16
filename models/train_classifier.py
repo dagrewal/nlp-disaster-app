@@ -87,12 +87,12 @@ def build_model(category_names):
         parameters = {
             'features__text_pipeline__vect__max_features': [10000],
             'features__text_pipeline__tfidf__sublinear_tf': [True],
-            'features__text_pipeline__vect__ngram_range': [(1,2)],
+            'features__text_pipeline__vect__ngram_range': [(1,1), (1,2)],
             'features__text_pipeline__vect__min_df': [1],
             'features__text_pipeline__vect__max_df': [.95],
             'features__text_pipeline__tfidf__smooth_idf': [True],
             'features__text_pipeline__tfidf__norm': ['l2'],
-            'clf__classifier__alpha': [1.]
+            'clf__classifier__alpha': [0.01, 1.]
         }
 
         # perform cross validation using grid search on the pipeline described above
