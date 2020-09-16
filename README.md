@@ -11,7 +11,7 @@
 1. [License](5.-License)
 1. [Acknowledgements](6.-Acknowledgements)
 ## 1. Overview
-This project was completed as part of the Udacity Data Science Nanodegree program. The application is live at https://limitless-ravine-56809.herokuapp.com/index however instructions have been provided in the following sections if you wish to run the application locally.
+This project was completed as part of the Udacity Data Science Nanodegree program. 
 #### Business Requirements
 To correctly classify messages into disaster and emergency-related categories. 
 ## 2. Getting Started
@@ -54,7 +54,7 @@ The Python script will proceed to prepare the data for training, engineer new fe
 Once everything has finished running (**note** that the *train_classifier.py* script will take a while to run), navigate to `nlp-disaster-app` and run `gunicorn nlp-disaster-app:app` and navigate to **localhost:8000**.
 
 ## 3. Future Developments
-The model actually has poor predictive performance. It could be a task for the reader to improve the accuracy of the model by engineering new features and applying different supervised learning models. The reader could also create more visualizations to be included on the home page of the application.
+It could be a task for the reader to improve the accuracy of the model by engineering new features and applying different supervised learning models to improve the model performance. The reader could also create more visualizations to be included on the home page of the application.
 
 ## 4. Author
 [Daniel Grewal](https://github.com/dagrewal)
