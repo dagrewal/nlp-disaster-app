@@ -3,7 +3,7 @@ gunicorn
 pandas
 requests
 plotly
-scikit-learn=0.23.1
+scikit-learn==0.23.1
 scikit-multilearn
 nltk
 sqlalchemy
